@@ -6,4 +6,4 @@
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\assert.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\rt_sys.h \
-  RTE\_Automotive_Smart_Safety_System\RTE_Components.h
+  RTE\_Target_1\RTE_Components.h
