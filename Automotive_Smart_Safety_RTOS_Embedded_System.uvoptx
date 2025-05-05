@@ -142,6 +142,22 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>52</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\lcd.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
           <LineNumber>118</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>8710</Address>
@@ -156,7 +172,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\118</Expression>
         </Bp>
         <Bp>
-          <Number>1</Number>
+          <Number>2</Number>
           <Type>0</Type>
           <LineNumber>101</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -172,7 +188,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\101</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>3</Number>
           <Type>0</Type>
           <LineNumber>116</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -188,7 +204,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\116</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
+          <Number>4</Number>
           <Type>0</Type>
           <LineNumber>114</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -204,7 +220,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\114</Expression>
         </Bp>
         <Bp>
-          <Number>4</Number>
+          <Number>5</Number>
           <Type>0</Type>
           <LineNumber>109</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -220,7 +236,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\109</Expression>
         </Bp>
         <Bp>
-          <Number>5</Number>
+          <Number>6</Number>
           <Type>0</Type>
           <LineNumber>104</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -236,7 +252,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\104</Expression>
         </Bp>
         <Bp>
-          <Number>6</Number>
+          <Number>7</Number>
           <Type>0</Type>
           <LineNumber>103</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -252,7 +268,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\103</Expression>
         </Bp>
         <Bp>
-          <Number>7</Number>
+          <Number>8</Number>
           <Type>0</Type>
           <LineNumber>92</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -268,7 +284,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\92</Expression>
         </Bp>
         <Bp>
-          <Number>8</Number>
+          <Number>9</Number>
           <Type>0</Type>
           <LineNumber>90</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -284,7 +300,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\90</Expression>
         </Bp>
         <Bp>
-          <Number>9</Number>
+          <Number>10</Number>
           <Type>0</Type>
           <LineNumber>87</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -300,7 +316,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\87</Expression>
         </Bp>
         <Bp>
-          <Number>10</Number>
+          <Number>11</Number>
           <Type>0</Type>
           <LineNumber>84</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -316,7 +332,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\84</Expression>
         </Bp>
         <Bp>
-          <Number>11</Number>
+          <Number>12</Number>
           <Type>0</Type>
           <LineNumber>81</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -332,7 +348,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\81</Expression>
         </Bp>
         <Bp>
-          <Number>12</Number>
+          <Number>13</Number>
           <Type>0</Type>
           <LineNumber>69</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -348,7 +364,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\69</Expression>
         </Bp>
         <Bp>
-          <Number>13</Number>
+          <Number>14</Number>
           <Type>0</Type>
           <LineNumber>66</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -364,7 +380,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\66</Expression>
         </Bp>
         <Bp>
-          <Number>14</Number>
+          <Number>15</Number>
           <Type>0</Type>
           <LineNumber>62</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -380,7 +396,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\62</Expression>
         </Bp>
         <Bp>
-          <Number>15</Number>
+          <Number>16</Number>
           <Type>0</Type>
           <LineNumber>56</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -396,7 +412,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\56</Expression>
         </Bp>
         <Bp>
-          <Number>16</Number>
+          <Number>17</Number>
           <Type>0</Type>
           <LineNumber>29</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -412,7 +428,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\29</Expression>
         </Bp>
         <Bp>
-          <Number>17</Number>
+          <Number>18</Number>
           <Type>0</Type>
           <LineNumber>52</LineNumber>
           <EnabledFlag>1</EnabledFlag>

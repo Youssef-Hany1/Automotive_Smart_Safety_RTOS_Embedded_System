@@ -21,6 +21,7 @@
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\portable\GCC\ARM_CM4F\portmacro.h \
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\mpu_wrappers.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\task.h \
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\list.h \
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\queue.h \
