@@ -22,8 +22,19 @@ void debounceDelay() {
     SysCtlDelay(SysCtlClockGet() / 3000);
 }
 
+void delay_ms(uint32_t ms)
+{
+	volatile uint32_t i;
+	while (ms--)
+	{
+		for (i = 0; i < 4000; i++)
+		{
+		}
+	}
+}
+
 // GPIO Port A ISR handler
-void PortA_ISR(void) {
+void GPIOA_Handler(void) {
     uint32_t status = GPIOIntStatus(GPIO_PORTA_BASE, true);
     GPIOIntClear(GPIO_PORTA_BASE, status);
     debounceDelay();
@@ -38,10 +49,8 @@ void PortA_ISR(void) {
 void initGPIO() {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA) ||
-           !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF) ||
-           !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE));
+           !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
 
     // Output (RGB + buzzer)
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
@@ -53,7 +62,7 @@ void initGPIO() {
     // Setup interrupt on PA2–PA7
     GPIOIntDisable(GPIO_PORTA_BASE, 0xFC);
     GPIOIntClear(GPIO_PORTA_BASE, 0xFC);
-    GPIOIntRegister(GPIO_PORTA_BASE, PortA_ISR);
+    GPIOIntRegister(GPIO_PORTA_BASE, GPIOA_Handler);
     GPIOIntTypeSet(GPIO_PORTA_BASE, 0xFC, GPIO_BOTH_EDGES);
     GPIOIntEnable(GPIO_PORTA_BASE, 0xFC);
 }
@@ -121,28 +130,31 @@ int measureDistance() {
 
 // RGB LED
 void initRGB() {
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2);
 }
 
 void setRGBColor(char color) {
     switch (color) {
-        case 'R': GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_PIN_1); break;
-        case 'G': GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_PIN_3); break;
-        case 'Y': GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_PIN_1 | GPIO_PIN_3); break;
-        default:  GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0); break;
+        case 'R': GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_1); break;
+        case 'G': GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_2); break;
+        case 'Y': GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2, GPIO_PIN_1 | GPIO_PIN_2); break;
+        default:  GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2, 0); break;
     }
 }
 
 // Buzzer
 void initBuzzer() {
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_2);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_3);
 }
 
 void setBuzzerFrequency(int frequency) {
-    if (frequency > 0)
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, GPIO_PIN_2);
-    else
-        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
+    if (frequency > 0){
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, GPIO_PIN_3);
+				delay_ms(frequency);
+			  GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
+				delay_ms(frequency); 
+		} else
+        GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
 }
 
 // System State Checkers

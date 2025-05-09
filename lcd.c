@@ -74,3 +74,9 @@ void LCD_SetCursor(unsigned char row, unsigned char col) {
     uint8_t address = (row == 0) ? col : 0x40 + col;
     LCD_SendCommand(0x80 | address);  // Set DDRAM address
 }
+
+void LCD_Clear(void) {
+    LCD_SendCommand(0x01);  // Clear display
+    delayMs(2);             // Wait for clear to complete
+}
+

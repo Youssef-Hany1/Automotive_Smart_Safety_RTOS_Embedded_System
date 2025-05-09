@@ -79,8 +79,8 @@
       </OPTFL>
       <CpuCode>4</CpuCode>
       <DebugOpt>
-        <uSim>1</uSim>
-        <uTrg>0</uTrg>
+        <uSim>0</uSim>
+        <uTrg>1</uTrg>
         <sLdApp>1</sLdApp>
         <sGomain>1</sGomain>
         <sRbreak>1</sRbreak>
@@ -103,7 +103,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>12</nTsel>
+        <nTsel>19</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -142,6 +142,70 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+          <LineNumber>35</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>64</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>67</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>61</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
           <LineNumber>52</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
@@ -156,7 +220,7 @@
           <Expression></Expression>
         </Bp>
         <Bp>
-          <Number>1</Number>
+          <Number>5</Number>
           <Type>0</Type>
           <LineNumber>118</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -172,7 +236,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\118</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>6</Number>
           <Type>0</Type>
           <LineNumber>101</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -188,7 +252,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\101</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
+          <Number>7</Number>
           <Type>0</Type>
           <LineNumber>116</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -204,7 +268,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\116</Expression>
         </Bp>
         <Bp>
-          <Number>4</Number>
+          <Number>8</Number>
           <Type>0</Type>
           <LineNumber>114</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -220,7 +284,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\114</Expression>
         </Bp>
         <Bp>
-          <Number>5</Number>
+          <Number>9</Number>
           <Type>0</Type>
           <LineNumber>109</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -236,7 +300,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\109</Expression>
         </Bp>
         <Bp>
-          <Number>6</Number>
+          <Number>10</Number>
           <Type>0</Type>
           <LineNumber>104</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -252,7 +316,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\104</Expression>
         </Bp>
         <Bp>
-          <Number>7</Number>
+          <Number>11</Number>
           <Type>0</Type>
           <LineNumber>103</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -268,7 +332,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\103</Expression>
         </Bp>
         <Bp>
-          <Number>8</Number>
+          <Number>12</Number>
           <Type>0</Type>
           <LineNumber>92</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -284,7 +348,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\92</Expression>
         </Bp>
         <Bp>
-          <Number>9</Number>
+          <Number>13</Number>
           <Type>0</Type>
           <LineNumber>90</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -300,7 +364,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\90</Expression>
         </Bp>
         <Bp>
-          <Number>10</Number>
+          <Number>14</Number>
           <Type>0</Type>
           <LineNumber>87</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -316,7 +380,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\87</Expression>
         </Bp>
         <Bp>
-          <Number>11</Number>
+          <Number>15</Number>
           <Type>0</Type>
           <LineNumber>84</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -332,7 +396,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\84</Expression>
         </Bp>
         <Bp>
-          <Number>12</Number>
+          <Number>16</Number>
           <Type>0</Type>
           <LineNumber>81</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -348,7 +412,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\81</Expression>
         </Bp>
         <Bp>
-          <Number>13</Number>
+          <Number>17</Number>
           <Type>0</Type>
           <LineNumber>69</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -364,7 +428,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\69</Expression>
         </Bp>
         <Bp>
-          <Number>14</Number>
+          <Number>18</Number>
           <Type>0</Type>
           <LineNumber>66</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -380,7 +444,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\66</Expression>
         </Bp>
         <Bp>
-          <Number>15</Number>
+          <Number>19</Number>
           <Type>0</Type>
           <LineNumber>62</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -396,7 +460,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\62</Expression>
         </Bp>
         <Bp>
-          <Number>16</Number>
+          <Number>20</Number>
           <Type>0</Type>
           <LineNumber>56</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -412,7 +476,7 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\56</Expression>
         </Bp>
         <Bp>
-          <Number>17</Number>
+          <Number>21</Number>
           <Type>0</Type>
           <LineNumber>29</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -428,9 +492,201 @@
           <Expression>\\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.c\29</Expression>
         </Bp>
         <Bp>
-          <Number>18</Number>
+          <Number>22</Number>
           <Type>0</Type>
           <LineNumber>52</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>23</Number>
+          <Type>0</Type>
+          <LineNumber>36</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>24</Number>
+          <Type>0</Type>
+          <LineNumber>40</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>25</Number>
+          <Type>0</Type>
+          <LineNumber>85</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>26</Number>
+          <Type>0</Type>
+          <LineNumber>89</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>27</Number>
+          <Type>0</Type>
+          <LineNumber>95</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>28</Number>
+          <Type>0</Type>
+          <LineNumber>97</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>29</Number>
+          <Type>0</Type>
+          <LineNumber>111</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>30</Number>
+          <Type>0</Type>
+          <LineNumber>112</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>31</Number>
+          <Type>0</Type>
+          <LineNumber>117</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>32</Number>
+          <Type>0</Type>
+          <LineNumber>126</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>33</Number>
+          <Type>0</Type>
+          <LineNumber>128</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\safety_tasks.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>34</Number>
+          <Type>0</Type>
+          <LineNumber>130</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>

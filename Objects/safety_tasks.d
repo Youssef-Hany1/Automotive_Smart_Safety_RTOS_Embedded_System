@@ -27,4 +27,12 @@
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\queue.h \
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\semphr.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\lcd.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\drivers.h
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\drivers.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\sysctl.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\gpio.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\adc.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\pin_map.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\timer.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\interrupt.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_ints.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_memmap.h
