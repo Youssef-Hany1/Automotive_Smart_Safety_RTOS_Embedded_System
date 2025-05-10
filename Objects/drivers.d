@@ -1,13 +1,5 @@
-./objects/drivers.o: drivers.c \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\drivers.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
-  C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
-  Drivers\inc\tm4c123gh6pm.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\sysctl.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\gpio.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\adc.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\pin_map.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\timer.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\interrupt.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_ints.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_memmap.h
+./objects/drivers.o: drivers.c drivers.h Drivers\inc\tm4c123gh6pm.h \
+  Drivers\driverlib\sysctl.h Drivers\driverlib\gpio.h \
+  Drivers\driverlib\adc.h Drivers\driverlib\pin_map.h \
+  Drivers\driverlib\timer.h Drivers\driverlib\interrupt.h \
+  Drivers\inc\hw_ints.h Drivers\inc\hw_memmap.h
