@@ -27,8 +27,8 @@ void lcdUpdateTask(void* pvParameters);
 
 void createSafetyTasks() {
     lcdMutex = xSemaphoreCreateMutex();
-    speedQueue = xQueueCreate(5, sizeof(int));
-    distanceQueue = xQueueCreate(5, sizeof(int));
+    speedQueue = xQueueCreate(1, sizeof(int));
+    distanceQueue = xQueueCreate(1, sizeof(int));
 
     xTaskCreate(doorTask, "Door", 128, NULL, 3, NULL);
     xTaskCreate(rearAssistTask, "Rear", 128, NULL, 2, NULL);
@@ -37,48 +37,68 @@ void createSafetyTasks() {
 
 // Controls automatic and manual door locking
 void doorTask(void* pvParameters) {
+    int speed;
+
     while (1) {
-				if (isIgnitionOn()) {
-						int speed = readSpeedADC();
-						xQueueSend(speedQueue, &speed, portMAX_DELAY);
-					
-						if ((isGearDrive()||isGearReverse()) && speed > 10 && !doorLocked) {
-								lockDoors();
-								doorLocked = true;
-						}
+        if ( isIgnitionOn() ) {
+            // 1) Read & publish latest speed
+            speed = readSpeedADC();
+            xQueueOverwrite(speedQueue, &speed);
 
-						if (isManualLockPressed()) {
-								lockDoors();
-								doorLocked = true;
-						}
+            // 2) Auto-lock on motion
+            if ((isGearDrive() || isGearReverse()) && speed > 10 && !doorLocked) {
+                lockDoors();
+                doorLocked = true;
+            }
 
-						if (isManualUnlockPressed()) {
-								unlockDoors();
-								doorLocked = false;
-						}
-						
-						if(isDriverDoorOpen()){
-								if (xSemaphoreTake(lcdMutex, portMAX_DELAY)) {
-										LCD_Clear();
-									
-										//Door status
-										LCD_SetCursor(0, 0);
-										
-										LCD_Print("Door is opened!");
-										
-										GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, GPIO_PIN_3);
-										
-										xSemaphoreGive(lcdMutex);
-								}
-						}
-				}else{
-						LCD_Clear();
-						unlockDoors();
+            // 3) Manual-lock lever (PA6 level)
+            if ( isManualLockOn() && !doorLocked ) {
+                lockDoors();
+                doorLocked = true;
+            }
+
+            // 4) Manual-unlock lever (PA7 level)
+            if ( isManualUnlockOn() && doorLocked ) {
+                unlockDoors();
+                doorLocked = false;
+            }
+
+            // 5) Door-status ? buzzer & LCD
+            if ( isDriverDoorOpen() ) {
+                // start beeping
+                setBuzzerFrequency(125);
+
+                // show “Door is opened!” once
+                if ( xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100)) ) {
+                    LCD_Clear();
+                    LCD_SetCursor(0, 0);
+                    LCD_Print("Door is opened!");
+                    xSemaphoreGive(lcdMutex);
+                }
+            }
+            else {
+                // stop beeping
+                setBuzzerFrequency(0);
+            }
+        }
+        else {
+            // ignition off: ensure doors unlocked & buzzer off
+            setBuzzerFrequency(0);
+            unlockDoors();
             doorLocked = false;
-				}
+
+            // clear the display once
+            if ( xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100)) ) {
+                LCD_Clear();
+                xSemaphoreGive(lcdMutex);
+            }
+        }
+
+        // run at ~10 Hz
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
+
 
 // Assists reversing using ultrasonic sensor and buzzer/LEDs
 void rearAssistTask(void* pvParameters) {
@@ -86,7 +106,7 @@ void rearAssistTask(void* pvParameters) {
 				if (isIgnitionOn()) {
 						if (isGearReverse()) {
 								int dist = measureDistance();
-								xQueueSend(distanceQueue, &dist, portMAX_DELAY);
+								xQueueOverwrite(distanceQueue, &dist);
 
 								if (dist < 30) {
 										setBuzzerFrequency(125);
@@ -110,34 +130,52 @@ void rearAssistTask(void* pvParameters) {
 
 // Updates LCD display with lock status, speed, and distance
 void lcdUpdateTask(void* pvParameters) {
-    char buffer[17];  // 16 chars + null terminator
-    int speed = 0;
-    int dist = 0;
+    char buffer[17];
+    int speed = 0, dist = 0;
 
     while (1) {
-				if (isIgnitionOn()) {
-						if (xSemaphoreTake(lcdMutex, portMAX_DELAY)) {
-								LCD_Clear();
-							
-								// Line 0: Door lock status
-								LCD_SetCursor(0, 0);
-								
-								LCD_Print(doorLocked ? "Doors: LOCKED  " : "Doors: UNLOCKED");
+        if (isIgnitionOn()) {
+            if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100))) {
+                // line 0: lock status
+                LCD_SetCursor(0, 0);
+                LCD_Print(doorLocked ? "Doors: LOCKED  "
+                                     : "Doors: UNLOCKED");
 
-								// Try to read speed and distance
-								xQueueReceive(speedQueue, &speed, 0);
-								xQueueReceive(distanceQueue, &dist, 0);
+                // grab latest speed (always) and distance (we’ll show it only in R)
+                xQueueReceive(speedQueue,    &speed, 0);
+                xQueueReceive(distanceQueue, &dist,  0);
 
-								// Line 1: Speed and Distance in compact format
-								LCD_SetCursor(1, 0);
-								snprintf(buffer, 17, "S:%3dkm D:%3dcm", speed, dist);
-								LCD_Print(buffer);
+                // line 1: conditional display
+                LCD_SetCursor(1, 0);
+                if (isGearReverse()) {
+                    // show both speed & distance
+                    snprintf(buffer, sizeof(buffer),
+                             "S:%3dkm D:%3dcm", speed, dist);
+                } else {
+                    // only speed; pad out the rest
+                    snprintf(buffer, sizeof(buffer),
+                             "S:%3dkm        ", speed);
+                }
+                LCD_Print(buffer);
 
-								xSemaphoreGive(lcdMutex);
-						}
-				}else{
-						LCD_Clear();
-				}
+                xSemaphoreGive(lcdMutex);
+            }
+        } else {
+            // clear once when ignition first goes off
+            static bool wasOn = true;
+            if (wasOn) {
+                if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100))) {
+                    LCD_Clear();
+                    xSemaphoreGive(lcdMutex);
+                }
+                wasOn = false;
+            }
+        }
+        // throttle updates to ~1 Hz
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
+
+
+
 
