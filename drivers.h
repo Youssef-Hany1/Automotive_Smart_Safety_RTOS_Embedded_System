@@ -33,4 +33,18 @@ void unlockDoors(void);          // Disengage the door lock (red LED off)
 bool isManualLockPressed(void);   // Returns true if manual lock was triggered
 bool isManualUnlockPressed(void); // Returns true if manual unlock was triggered
 
+// a little enum to track gear
+typedef enum { GEAR_NEUTRAL=0, GEAR_DRIVE=1, GEAR_REVERSE=2 } Gear_t;
+
+// the current gear state (0=none/neutral,1=D,2=R)
+extern volatile Gear_t gearState;
+
+// Manual-lock/unlock lever state (level-driven)
+extern volatile bool manualLockState;    // true when PA6 is “up”
+extern volatile bool manualUnlockState;  // true when PA7 is “up”
+
+// Query the current lever position
+bool isManualLockOn(void);    // true while the “lock” lever is up
+bool isManualUnlockOn(void);  // true while the “unlock” lever is up
+
 #endif // DRIVERS_H

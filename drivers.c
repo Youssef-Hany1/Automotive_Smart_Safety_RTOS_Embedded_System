@@ -12,10 +12,12 @@
 #include "Drivers/inc/hw_memmap.h"
 
 // Global volatile flags
-volatile int manualLockFlag = 0;
-volatile int manualUnlockFlag = 0;
 volatile int ignitionState = 0;
 volatile int driverDoorState = 0;
+//latch for gear switch
+volatile Gear_t gearState = GEAR_NEUTRAL;
+volatile bool manualLockState     = false;
+volatile bool manualUnlockState   = false;
 
 // Debounce delay (~1 ms)
 void debounceDelay() {
@@ -39,11 +41,60 @@ void GPIOA_Handler(void) {
     GPIOIntClear(GPIO_PORTA_BASE, status);
     debounceDelay();
 
-    if (status & GPIO_PIN_6) manualLockFlag = 1;
-    if (status & GPIO_PIN_7) manualUnlockFlag = 1;
+    // PA6 = lock lever: high when up, low when down
+    if (status & GPIO_PIN_6)
+        manualLockState = (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_6) & GPIO_PIN_6) != 0;
+
+    // PA7 = unlock lever
+    if (status & GPIO_PIN_7)
+        manualUnlockState = (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_7) & GPIO_PIN_7) != 0;
+ 
+
     if (status & GPIO_PIN_4) ignitionState = (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_4) == 0);
     if (status & GPIO_PIN_5) driverDoorState = (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_5) == 0);
+	
+		// latch gear state on each button press
+    // --- DRIVE lever (PA2) ---
+    if (status & GPIO_PIN_2) {
+        // reads 0 when switch closed to ground
+        if (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_2) == 0)
+            gearState = GEAR_DRIVE;      // lever down ? DRIVE
+        else
+            gearState = GEAR_NEUTRAL;    // lever up   ? back to NEUTRAL
+    }
+
+    // --- REVERSE lever (PA3) ---
+    if (status & GPIO_PIN_3) {
+        if (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_3) == 0)
+            gearState = GEAR_REVERSE;    // lever down ? REVERSE
+        else
+            gearState = GEAR_NEUTRAL;    // lever up   ? NEUTRAL
+    }
+
+    // --- IGNITION lever (PA4) ---
+    if (status & GPIO_PIN_4) {
+        ignitionState = (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_4) == 0);
+    }
+
+    // --- DRIVER-DOOR lever (PA5) ---
+    if (status & GPIO_PIN_5) {
+        driverDoorState = (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_5) == 0);
+    }
+
+    // manual-lock lever (PA6)
+    if (status & GPIO_PIN_6)
+        manualLockState = (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_6) == 0);
+		
+    // manual-unlock lever (PA7)
+    if (status & GPIO_PIN_7)
+        manualUnlockState = (GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_7) == 0);
+		 
 }
+
+
+
+
+
 
 // GPIO Initialization
 void initGPIO() {
@@ -53,7 +104,7 @@ void initGPIO() {
            !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
 
     // Output (RGB + buzzer)
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4);
 
     // Input (manual lock/unlock, ignition, gear, door)
     GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7);
@@ -91,16 +142,35 @@ int readSpeedADC() {
 
 // Ultrasonic Sensor (PB5 trigger, PB6 echo)
 void initUltrasonic() {
+    // 1) Enable the GPIOB and Timer1 peripherals
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1);
-    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB) || !SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER1));
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB) ||
+           !SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER1));
 
-    GPIOPinConfigure(0x00011807);  // PB6 as CCP (capture input)
+    // 2) PB5 = trigger pin (GPIO output)
+    GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_5);
+
+    // 3) PB6 = Timer1A capture input (use the standard macro)
+    GPIOPinConfigure(GPIO_PIN_6);
     GPIOPinTypeTimer(GPIO_PORTB_BASE, GPIO_PIN_6);
 
-    TimerConfigure(TIMER1_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_B_CAP_TIME);
+    // 4) Configure Timer1A as a split 16-bit timer in A-capture mode
+    TimerDisable(TIMER1_BASE, TIMER_A);
+    TimerConfigure(TIMER1_BASE,
+                   TIMER_CFG_SPLIT_PAIR    // two 16-bit timers
+                   | TIMER_CFG_A_CAP_TIME  // Timer A = edge-capture
+                   );
+    // Capture on BOTH edges
     TimerControlEvent(TIMER1_BASE, TIMER_A, TIMER_EVENT_BOTH_EDGES);
+
+    // 5) Clear any leftover event, then enable the capture interrupt
+    TimerIntClear (TIMER1_BASE, TIMER_CAPA_EVENT);
+    TimerIntEnable(TIMER1_BASE, TIMER_CAPA_EVENT);
+
+    // 6) Finally, enable the timer
     TimerEnable(TIMER1_BASE, TIMER_A);
+ 
 }
 
 int measureDistance() {
@@ -115,13 +185,35 @@ int measureDistance() {
     // Switch PB6 back to timer
     GPIOPinTypeTimer(GPIO_PORTB_BASE, GPIO_PIN_6);
 
-    while (!(TimerIntStatus(TIMER1_BASE, true) & TIMER_CAPA_EVENT));
-    startTime = TimerValueGet(TIMER1_BASE, TIMER_A);
+// --- clear any old capture flags ---
     TimerIntClear(TIMER1_BASE, TIMER_CAPA_EVENT);
 
-    while (!(TimerIntStatus(TIMER1_BASE, true) & TIMER_CAPA_EVENT));
-    endTime = TimerValueGet(TIMER1_BASE, TIMER_A);
-    TimerIntClear(TIMER1_BASE, TIMER_CAPA_EVENT);
+    // wait for first edge (with ~20 ms timeout)
+    {
+      // wait for first edge (with ~20 ms timeout)
+			uint32_t loops = (SysCtlClockGet() * 20) / 1000;
+      while (!(TimerIntStatus(TIMER1_BASE, true) & TIMER_CAPA_EVENT)) {
+        if (--loops == 0) {
+          // no echo—return max distance
+          return 255;
+        }
+      }
+      startTime = TimerValueGet(TIMER1_BASE, TIMER_A);
+      TimerIntClear(TIMER1_BASE, TIMER_CAPA_EVENT);
+    }
+
+    // wait for second edge (with ~20 ms timeout)
+    {
+      // wait for first edge (with ~20 ms timeout)
+			uint32_t loops = (SysCtlClockGet() * 20) / 1000;
+      while (!(TimerIntStatus(TIMER1_BASE, true) & TIMER_CAPA_EVENT)) {
+        if (--loops == 0) {
+          return 255;
+        }
+      }
+      endTime = TimerValueGet(TIMER1_BASE, TIMER_A);
+      TimerIntClear(TIMER1_BASE, TIMER_CAPA_EVENT);
+    }
 
     uint32_t pulseWidth = (startTime > endTime) ? (startTime - endTime) : (endTime - startTime);
     float time_us = pulseWidth * 62.5f; // 62.5 ns ticks
@@ -158,8 +250,8 @@ void setBuzzerFrequency(int frequency) {
 }
 
 // System State Checkers
-bool isGearDrive()   { return GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_2) == 0; }
-bool isGearReverse() { return GPIOPinRead(GPIO_PORTA_BASE, GPIO_PIN_3) == 0; }
+bool isGearDrive()   { return gearState == GEAR_DRIVE; }
+bool isGearReverse() { return gearState == GEAR_REVERSE; }
 bool isIgnitionOn()  { return ignitionState; }
 bool isDriverDoorOpen() { return driverDoorState; }
 
@@ -173,18 +265,10 @@ void unlockDoors() {
 }
 
 // Manual Lock/Unlock Flags
-bool isManualLockPressed() {
-    if (manualLockFlag) {
-        manualLockFlag = 0;
-        return true;
-    }
-    return false;
+bool isManualLockOn(void) {
+    return manualLockState;
 }
 
-bool isManualUnlockPressed() {
-    if (manualUnlockFlag) {
-        manualUnlockFlag = 0;
-        return true;
-    }
-    return false;
+bool isManualUnlockOn(void) {
+    return manualUnlockState;
 }
