@@ -6,7 +6,7 @@
 #include "Drivers/driverlib/gpio.h"
 
 #define LCD_PORT GPIO_PORTB_BASE
-#define LCD_RS GPIO_PIN_6
+#define LCD_RS GPIO_PIN_4
 #define LCD_EN GPIO_PIN_7
 #define LCD_DATA_PINS_MASK (GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3)
 
