@@ -146,10 +146,18 @@ void lcdUpdateTask(void* pvParameters) {
                 }
 						}
             if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100))) {
-                // line 0: lock status
+                // line 0: gear & lock status
                 LCD_SetCursor(0, 0);
-                LCD_Print(doorLocked ? "Doors: LOCKED  "
-                                     : "Doors: UNLOCKED");
+								if (isGearDrive()) {
+									LCD_Print("Gear:D ");
+                } else if(isGearReverse()) {
+                  LCD_Print("Gear:R ");
+                } else {
+									LCD_Print("Gear:N ");
+								}
+								LCD_SetCursor(0, 8);
+                LCD_Print(doorLocked ? "Doors: L "
+                                     : "Doors: UL");
 
                 // grab latest speed (always) and distance (we’ll show it only in R)
                 xQueueReceive(speedQueue,    &speed, 0);

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Automotive_Smart_Safety_RTOS_Embedded_System.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Automotive_Smart_Safety_RTOS_Embedded_System.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Sun May 11 17:40:29 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6190004: Last Updated: Sun May 11 17:54:27 2025
 <BR><P>
 <H3>Maximum Stack Usage =        324 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2048,7 +2048,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[101]"></a>isGearDrive</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, drivers.o(.text.isGearDrive))
-<BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorTask
+<BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcdUpdateTask
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorTask
 </UL>
 
 <P><STRONG><a name="[102]"></a>isGearReverse</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, drivers.o(.text.isGearReverse))
@@ -2071,7 +2072,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;doorTask
 </UL>
 
-<P><STRONG><a name="[7d]"></a>lcdUpdateTask</STRONG> (Thumb, 460 bytes, Stack size 56 bytes, safety_tasks.o(.text.lcdUpdateTask))
+<P><STRONG><a name="[7d]"></a>lcdUpdateTask</STRONG> (Thumb, 528 bytes, Stack size 56 bytes, safety_tasks.o(.text.lcdUpdateTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 200 + Unknown Stack Size
 <LI>Call Chain = lcdUpdateTask &rArr; xQueueGenericSend &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
@@ -2083,6 +2084,7 @@ Global Symbols
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
 <LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueSemaphoreTake
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isGearReverse
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isGearDrive
 <LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;xQueueGenericSend
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;isIgnitionOn
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;snprintf

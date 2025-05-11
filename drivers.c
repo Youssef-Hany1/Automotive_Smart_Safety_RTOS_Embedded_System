@@ -91,11 +91,6 @@ void GPIOA_Handler(void) {
 		 
 }
 
-
-
-
-
-
 // GPIO Initialization
 void initGPIO() {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
