@@ -82,6 +82,7 @@ void doorTask(void* pvParameters) {
                     LCD_Clear();
                     LCD_SetCursor(0, 0);
                     LCD_Print("Door is opened!");
+										delay_ms(1000);
                     xSemaphoreGive(lcdMutex);
                 }
             }
@@ -109,7 +110,7 @@ void rearAssistTask(void* pvParameters) {
     while (1) {
 				if (isIgnitionOn()) {
 						if (isGearReverse()) {
-								int dist = measureDistance();
+								int dist = ultrasonicReadValue();
 								xQueueOverwrite(distanceQueue, &dist);
 
 								if (dist < 30) {
@@ -171,19 +172,22 @@ void lcdUpdateTask(void* pvParameters) {
 
                 // grab latest speed (always) and distance (we’ll show it only in R)
                 xQueueReceive(speedQueue,    &speed, pdMS_TO_TICKS(100));
-                xQueueReceive(distanceQueue, &dist,  pdMS_TO_TICKS(100));
+                xQueueReceive(distanceQueue, &dist, 0);
 
                 // line 1: conditional display
                 LCD_SetCursor(1, 0);
                 if (isGearReverse()) {
                     // show both speed & distance
                     snprintf(buffer, sizeof(buffer),
-                             "S:%3dkm D:%3dcm", speed, dist);
-                } else {
+                             "S:%3dkm D:%3dcm ", speed, dist);
+                } else if (isGearDrive()) {
                     // only speed; pad out the rest
                     snprintf(buffer, sizeof(buffer),
-                             "S:%3dkm        ", speed);
-                }
+                             "S:%3dkm         ", speed);
+                } else {
+										snprintf(buffer, sizeof(buffer),
+                             "                ", speed);
+								}
                 LCD_Print(buffer);
 								delay_ms(100);
                 xSemaphoreGive(lcdMutex);

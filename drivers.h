@@ -9,14 +9,14 @@ void delay_ms(uint32_t ms);
 // Initialization functions
 void initSwitches(void);         // Initialize Switches port and interrupts
 void initADC(void);              // Initialize ADC for speed sensing
-void initUltrasonic(void);       // Initialize ultrasonic sensor and timer
+void initUltrasonic(void);       // Initialize ultrasonic sensor
 void initBuzzer(void);           // Initialize buzzer pin
 void initRGB(void);              // Initialize RGB LED
 void initDoorLockLed(void);      // Initialize DoorLockedLed LED
 
 // Sensor reading functions
 int readSpeedADC(void);          // Read speed from ADC (returns speed in km/h)
-int measureDistance(void);       // Measure distance using ultrasonic (returns cm)
+uint32_t ultrasonicReadValue(); // Measure distance using ultrasonic (returns cm)
 
 // Actuator control functions
 void setBuzzerFrequency(int frequency); // Control buzzer (simple on/off)
