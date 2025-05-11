@@ -7,11 +7,12 @@
 void delay_ms(uint32_t ms);
 
 // Initialization functions
-void initGPIO(void);             // Initialize all GPIO ports and interrupts
+void initSwitches(void);         // Initialize Switches port and interrupts
 void initADC(void);              // Initialize ADC for speed sensing
 void initUltrasonic(void);       // Initialize ultrasonic sensor and timer
 void initBuzzer(void);           // Initialize buzzer pin
 void initRGB(void);              // Initialize RGB LED
+void initDoorLockLed(void);      // Initialize DoorLockedLed LED
 
 // Sensor reading functions
 int readSpeedADC(void);          // Read speed from ADC (returns speed in km/h)
@@ -19,7 +20,8 @@ int measureDistance(void);       // Measure distance using ultrasonic (returns c
 
 // Actuator control functions
 void setBuzzerFrequency(int frequency); // Control buzzer (simple on/off)
-void setRGBColor(char color);           // Set RGB LED color ('R', 'G', 'Y', 'N')
+void setRGBColor(char color);           // Set RGB LED color ('R', 'G', 'Y')
+void setDoorLockLed(int status);       // Set DoorLockLed
 
 // Gear & vehicle state functions
 bool isGearDrive(void);          // Returns true if gear is in Drive

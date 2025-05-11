@@ -92,14 +92,9 @@ void GPIOA_Handler(void) {
 }
 
 // GPIO Initialization
-void initGPIO() {
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+void initSwitches() {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA) ||
-           !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
-
-    // Output (RGB + buzzer + doorLockLed)
-    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA));
 
     // Input (manual lock/unlock, ignition, gear, door)
     GPIOPinTypeGPIOInput(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7);
@@ -217,6 +212,10 @@ int measureDistance() {
 
 // RGB LED
 void initRGB() {
+	  SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
+
+    // Output (RGB)
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2);
 		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2, 0);
 }
@@ -230,8 +229,27 @@ void setRGBColor(char color) {
     }
 }
 
+void initDoorLockLed(void) {
+	  SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
+	
+    // Output (DoorLockLed)
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_4);
+}
+
+void setDoorLockLed(int status) {
+		switch (status) {
+        case 1: GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_PIN_4); break;
+        case 0:  GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_4, 0); break;
+    }
+}
+
 // Buzzer
 void initBuzzer() {
+	  SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
+
+    // Output (buzzer)
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_3);
 }
 

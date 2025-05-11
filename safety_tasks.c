@@ -38,6 +38,7 @@ void createSafetyTasks() {
 // Controls automatic and manual door locking
 void doorTask(void* pvParameters) {
     int speed;
+		static bool wasHigh = false;
 
     while (1) {
         if ( isIgnitionOn() ) {
@@ -46,20 +47,28 @@ void doorTask(void* pvParameters) {
             xQueueOverwrite(speedQueue, &speed);
 
             // 2) Auto-lock on motion
-            if ((isGearDrive() || isGearReverse()) && speed > 10 && !doorLocked && !isDriverDoorOpen()) {
+            if ((isGearDrive() || isGearReverse()) && speed > 10 && !doorLocked && !isDriverDoorOpen() && !wasHigh) {
                 lockDoors();
+							  setDoorLockLed(1);
                 doorLocked = true;
+								wasHigh = true;
+            }
+						
+						if ((isGearDrive() || isGearReverse()) && speed <= 10 && wasHigh) {
+								wasHigh = false;
             }
 
             // 3) Manual-lock lever (PA6 level)
             if ( isManualLockOn() && !doorLocked && !isDriverDoorOpen()) {
                 lockDoors();
+							  setDoorLockLed(1);
                 doorLocked = true;
             }
 
             // 4) Manual-unlock lever (PA7 level)
             if ( isManualUnlockOn() && doorLocked) {
                 unlockDoors();
+							  setDoorLockLed(0);
                 doorLocked = false;
             }
 
@@ -85,6 +94,7 @@ void doorTask(void* pvParameters) {
             // ignition off: ensure doors unlocked & buzzer off
             setBuzzerFrequency(0);
             unlockDoors();
+					  setDoorLockLed(0);
             doorLocked = false;
         }
 
@@ -156,12 +166,12 @@ void lcdUpdateTask(void* pvParameters) {
 									LCD_Print("Gear:N ");
 								}
 								LCD_SetCursor(0, 8);
-                LCD_Print(doorLocked ? "Doors: L "
-                                     : "Doors: UL");
+                LCD_Print(doorLocked ? "Doors:L "
+                                     : "Doors:UL");
 
                 // grab latest speed (always) and distance (we’ll show it only in R)
-                xQueueReceive(speedQueue,    &speed, 0);
-                xQueueReceive(distanceQueue, &dist,  0);
+                xQueueReceive(speedQueue,    &speed, pdMS_TO_TICKS(100));
+                xQueueReceive(distanceQueue, &dist,  pdMS_TO_TICKS(100));
 
                 // line 1: conditional display
                 LCD_SetCursor(1, 0);
@@ -175,7 +185,7 @@ void lcdUpdateTask(void* pvParameters) {
                              "S:%3dkm        ", speed);
                 }
                 LCD_Print(buffer);
-
+								delay_ms(100);
                 xSemaphoreGive(lcdMutex);
             }
         } else {

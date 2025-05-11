@@ -19,7 +19,8 @@ int main(void) {
 }
 
 void setupHardware() {
-    initGPIO();
+    initSwitches();
+		initDoorLockLed();
     initADC();
     initUltrasonic();
     initLCD();
