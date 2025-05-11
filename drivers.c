@@ -103,7 +103,7 @@ void initGPIO() {
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOA) ||
            !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOF));
 
-    // Output (RGB + buzzer)
+    // Output (RGB + buzzer + doorLockLed)
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4);
 
     // Input (manual lock/unlock, ignition, gear, door)
@@ -223,6 +223,7 @@ int measureDistance() {
 // RGB LED
 void initRGB() {
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2);
+		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2, 0);
 }
 
 void setRGBColor(char color) {
