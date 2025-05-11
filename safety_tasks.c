@@ -46,25 +46,25 @@ void doorTask(void* pvParameters) {
             xQueueOverwrite(speedQueue, &speed);
 
             // 2) Auto-lock on motion
-            if ((isGearDrive() || isGearReverse()) && speed > 10 && !doorLocked) {
+            if ((isGearDrive() || isGearReverse()) && speed > 10 && !doorLocked && !isDriverDoorOpen()) {
                 lockDoors();
                 doorLocked = true;
             }
 
             // 3) Manual-lock lever (PA6 level)
-            if ( isManualLockOn() && !doorLocked ) {
+            if ( isManualLockOn() && !doorLocked && !isDriverDoorOpen()) {
                 lockDoors();
                 doorLocked = true;
             }
 
             // 4) Manual-unlock lever (PA7 level)
-            if ( isManualUnlockOn() && doorLocked ) {
+            if ( isManualUnlockOn() && doorLocked) {
                 unlockDoors();
                 doorLocked = false;
             }
 
             // 5) Door-status ? buzzer & LCD
-            if ( isDriverDoorOpen() ) {
+            if ( isDriverDoorOpen() && !doorLocked) {
                 // start beeping
                 setBuzzerFrequency(125);
 
@@ -86,12 +86,6 @@ void doorTask(void* pvParameters) {
             setBuzzerFrequency(0);
             unlockDoors();
             doorLocked = false;
-
-            // clear the display once
-            if ( xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100)) ) {
-                LCD_Clear();
-                xSemaphoreGive(lcdMutex);
-            }
         }
 
         // run at ~10 Hz
@@ -120,9 +114,13 @@ void rearAssistTask(void* pvParameters) {
 								}
 						} else {
 								setBuzzerFrequency(0);
+								setRGBColor('0');
 						}
 				}else{
-						LCD_Clear();
+					  // ignition off: buzzer off
+            setBuzzerFrequency(0);
+						setRGBColor('0');
+						
 				}
         vTaskDelay(pdMS_TO_TICKS(250));
     }
@@ -132,9 +130,21 @@ void rearAssistTask(void* pvParameters) {
 void lcdUpdateTask(void* pvParameters) {
     char buffer[17];
     int speed = 0, dist = 0;
+		static bool wasOn = false;
 
     while (1) {
         if (isIgnitionOn()) {
+						if(!wasOn) {
+								wasOn = true;
+								if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100))) {
+										LCD_Clear();
+										LCD_SetCursor(0, 0);
+										LCD_Print("Car ON");
+										delay_ms(1000);
+										LCD_Clear();
+                    xSemaphoreGive(lcdMutex);
+                }
+						}
             if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100))) {
                 // line 0: lock status
                 LCD_SetCursor(0, 0);
@@ -162,20 +172,19 @@ void lcdUpdateTask(void* pvParameters) {
             }
         } else {
             // clear once when ignition first goes off
-            static bool wasOn = true;
             if (wasOn) {
-                if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100))) {
-                    LCD_Clear();
+								wasOn = false;
+								if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(100))) {
+									  LCD_Clear();
+										LCD_SetCursor(0, 0);
+										LCD_Print("Car OFF");
+										delay_ms(1000);
+										LCD_Clear();
                     xSemaphoreGive(lcdMutex);
                 }
-                wasOn = false;
             }
         }
         // throttle updates to ~1 Hz
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
-
-
-
-

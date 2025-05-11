@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+void delay_ms(uint32_t ms);
+
 // Initialization functions
 void initGPIO(void);             // Initialize all GPIO ports and interrupts
 void initADC(void);              // Initialize ADC for speed sensing

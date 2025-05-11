@@ -10,8 +10,8 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pArmCC>6220000::V6.22::ARMCLANG</pArmCC>
-      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
+      <pArmCC>6190000::V6.19::ARMCLANG</pArmCC>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -464,24 +464,6 @@
       </api>
     </apis>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.1.0" condition="ARMv6_7_8-M Device">
-        <package name="CMSIS" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
-      </component>
-      <component Capiversion="1.0.1" Cclass="CMSIS" Cgroup="OS Tick" Csub="SysTick" Cvendor="ARM" Cversion="1.0.5" condition="OS Tick SysTick">
-        <package name="CMSIS" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
-      </component>
-      <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="FreeRTOS" Cvariant="Cortex-M" Cvendor="ARM" Cversion="11.2.0" condition="CMSIS RTOS2 FreeRTOS CortexM">
-        <package name="CMSIS-FreeRTOS" schemaVersion="1.7.40" url="https://www.keil.com/pack/" vendor="ARM" version="11.2.0"/>
-        <targetInfos>
-          <targetInfo name="Target 1"/>
-        </targetInfos>
-      </component>
       <component Cbundle="FreeRTOS" Cclass="RTOS" Cgroup="Config" Cvariant="CMSIS RTOS2" Cvendor="ARM" Cversion="11.2.0" condition="FreeRTOS Config CMSIS RTOS2">
         <package name="CMSIS-FreeRTOS" schemaVersion="1.7.40" url="https://www.keil.com/pack/" vendor="ARM" version="11.2.0"/>
         <targetInfos>
@@ -507,6 +489,24 @@
         </targetInfos>
       </component>
       <component Cbundle="FreeRTOS" Cclass="RTOS" Cgroup="Timers" Cvendor="ARM" Cversion="11.2.0" condition="FreeRTOS Timers">
+        <package name="CMSIS-FreeRTOS" schemaVersion="1.7.40" url="https://www.keil.com/pack/" vendor="ARM" version="11.2.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="6.1.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="1.0.1" Cclass="CMSIS" Cgroup="OS Tick" Csub="SysTick" Cvendor="ARM" Cversion="1.0.5" condition="OS Tick SysTick">
+        <package name="CMSIS" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="6.1.0"/>
+        <targetInfos>
+          <targetInfo name="Target 1"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="FreeRTOS" Cvariant="Cortex-M" Cvendor="ARM" Cversion="11.2.0" condition="CMSIS RTOS2 FreeRTOS CortexM">
         <package name="CMSIS-FreeRTOS" schemaVersion="1.7.40" url="https://www.keil.com/pack/" vendor="ARM" version="11.2.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
@@ -550,8 +550,8 @@
       </file>
       <file attr="config" category="header" name="CMSIS\RTOS2\FreeRTOS\Config\FreeRTOSConfig.h" version="10.7.0">
         <instance index="0">RTE\RTOS\FreeRTOSConfig.h</instance>
-        <component Cbundle="FreeRTOS" Cclass="RTOS" Cgroup="Config" Cvariant="CMSIS RTOS2" Cvendor="ARM" Cversion="11.1.0" condition="FreeRTOS Config CMSIS RTOS2"/>
-        <package name="CMSIS-FreeRTOS" schemaVersion="1.7.27" url="https://www.keil.com/pack/" vendor="ARM" version="11.1.0"/>
+        <component Cbundle="FreeRTOS" Cclass="RTOS" Cgroup="Config" Cvariant="CMSIS RTOS2" Cvendor="ARM" Cversion="11.2.0" condition="FreeRTOS Config CMSIS RTOS2"/>
+        <package name="CMSIS-FreeRTOS" schemaVersion="1.7.40" url="https://www.keil.com/pack/" vendor="ARM" version="11.2.0"/>
         <targetInfos>
           <targetInfo name="Target 1"/>
         </targetInfos>
