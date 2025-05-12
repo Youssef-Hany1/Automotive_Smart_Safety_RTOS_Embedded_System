@@ -8,10 +8,13 @@
 #include "drivers.h"
 #include "lcd.h"
 #include "safety_tasks.h"
+#include "Drivers/driverlib/interrupt.h"
+
 
 void setupHardware();
 
 int main(void) {
+	  IntMasterEnable();  // Enable global interrupts
     setupHardware();
     createSafetyTasks();
     vTaskStartScheduler();
@@ -22,7 +25,7 @@ void setupHardware() {
     initSwitches();
 		initDoorLockLed();
     initADC();
-    initUltrasonic();
+    ultrasonic_init();
     initLCD();
     initBuzzer();
     initRGB();

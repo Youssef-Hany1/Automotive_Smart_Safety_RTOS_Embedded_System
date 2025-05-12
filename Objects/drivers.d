@@ -19,5 +19,6 @@
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\pin_map.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\timer.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\interrupt.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_gpio.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_ints.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_memmap.h

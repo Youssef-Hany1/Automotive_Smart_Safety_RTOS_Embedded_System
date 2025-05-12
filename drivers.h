@@ -9,16 +9,19 @@ void delay_ms(uint32_t ms);
 // Initialization functions
 void initSwitches(void);         // Initialize Switches port and interrupts
 void initADC(void);              // Initialize ADC for speed sensing
-void initUltrasonic(void);       // Initialize ultrasonic sensor
+void ultrasonic_init(void);
 void initBuzzer(void);           // Initialize buzzer pin
 void initRGB(void);              // Initialize RGB LED
 void initDoorLockLed(void);      // Initialize DoorLockedLed LED
 
 // Sensor reading functions
 int readSpeedADC(void);          // Read speed from ADC (returns speed in km/h)
-uint32_t ultrasonicReadValue(); // Measure distance using ultrasonic (returns cm)
+uint32_t ultrasonic_get_distance(void);
+void ultrasonic_edge_processor(void);
 
 // Actuator control functions
+void setOnBuzzer(void);
+void setOffBuzzer(void);
 void setBuzzerFrequency(int frequency); // Control buzzer (simple on/off)
 void setRGBColor(char color);           // Set RGB LED color ('R', 'G', 'Y')
 void setDoorLockLed(int status);       // Set DoorLockLed
@@ -44,11 +47,11 @@ typedef enum { GEAR_NEUTRAL=0, GEAR_DRIVE=1, GEAR_REVERSE=2 } Gear_t;
 extern volatile Gear_t gearState;
 
 // Manual-lock/unlock lever state (level-driven)
-extern volatile bool manualLockState;    // true when PA6 is “up”
-extern volatile bool manualUnlockState;  // true when PA7 is “up”
+extern volatile bool manualLockState;    // true when PA6 is ?up?
+extern volatile bool manualUnlockState;  // true when PA7 is ?up?
 
 // Query the current lever position
-bool isManualLockOn(void);    // true while the “lock” lever is up
-bool isManualUnlockOn(void);  // true while the “unlock” lever is up
+bool isManualLockOn(void);    // true while the ?lock? lever is up
+bool isManualUnlockOn(void);  // true while the ?unlock? lever is up
 
 #endif // DRIVERS_H

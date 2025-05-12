@@ -28,4 +28,5 @@
   Drivers\inc\tm4c123gh6pm.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\drivers.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\lcd.h \
-  ..\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.h
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.h \
+  ..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\interrupt.h

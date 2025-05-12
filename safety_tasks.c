@@ -19,6 +19,8 @@ QueueHandle_t speedQueue;
 QueueHandle_t distanceQueue;
 SemaphoreHandle_t lcdMutex;
 bool doorLocked = false;
+bool doorOpenedBuzzer = false;
+bool distanceBuzzer = false;
 
 // Task prototypes
 void doorTask(void* pvParameters);
@@ -75,7 +77,8 @@ void doorTask(void* pvParameters) {
             // 5) Door-status ? buzzer & LCD
             if (isDriverDoorOpen() && !doorLocked) {
                 // start beeping
-                setBuzzerFrequency(500);
+                setOnBuzzer();
+								doorOpenedBuzzer = true;
                 if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(50))) {
                     LCD_SetCursor(0, 0);
                     LCD_Print("Door Opened     ");
@@ -83,11 +86,13 @@ void doorTask(void* pvParameters) {
                 }
             } else {
                 // stop beeping
-                setBuzzerFrequency(0);
+								doorOpenedBuzzer = false;
+								if(!distanceBuzzer)
+										setOffBuzzer();
             }
         } else {
             // ignition off: ensure doors unlocked & buzzer off
-            setBuzzerFrequency(0);
+            setOffBuzzer();
             unlockDoors();
             setDoorLockLed(0);
             doorLocked = false;
@@ -104,29 +109,40 @@ void rearAssistTask(void* pvParameters) {
     while (1) {
         if (isIgnitionOn() && isGearReverse()) {
             // Read the distance from the ultrasonic sensor
-            dist = ultrasonicReadValue();
+            dist = ultrasonic_get_distance();
             if (dist > 0) {  // Ensure the distance value is valid
                 xQueueOverwrite(distanceQueue, &dist);
                 
                 // Adjust buzzer frequency and LED color based on distance
                 if (dist < 30) {
-                    setBuzzerFrequency(250);   // Close distance
+										if (!doorOpenedBuzzer){
+												setBuzzerFrequency(750);   // Close distance
+												distanceBuzzer = true;
+										}
                     setRGBColor('R');          // Red LED (Danger)
                 } else if (dist < 100) {
-                    setBuzzerFrequency(500);   // Medium distance
+										if (!doorOpenedBuzzer){
+												setBuzzerFrequency(1500);   // Medium distance
+												distanceBuzzer = true;
+										}   
                     setRGBColor('Y');          // Yellow LED (Warning)
                 } else {
-                    setBuzzerFrequency(1000);  // Far distance
+										if (!doorOpenedBuzzer){
+												setBuzzerFrequency(3000);   // Far distance
+												distanceBuzzer = true;
+										}     
                     setRGBColor('G');          // Green LED (Safe)
                 }
             } else {
                 // Handle the case where distance could not be measured
-                setBuzzerFrequency(0);
+                setOffBuzzer();
+								distanceBuzzer = false;
                 setRGBColor('0');  // Turn off LEDs
             }
         } else {
-            // Turn off buzzer and LEDs when not in reverse
-            setBuzzerFrequency(0);  // No beeping when not in reverse
+            // Turn off buzzer and LEDs when not in reverse & door is not opened
+						if (!doorOpenedBuzzer)
+								setOffBuzzer();
             setRGBColor('0');       // Turn off LEDs
         }
 
@@ -154,7 +170,7 @@ void lcdUpdateTask(void* pvParameters) {
                     LCD_Clear();
                     LCD_SetCursor(0, 0);
                     LCD_Print("Car ON");
-                    delay_ms(500);  // Shortened delay for faster transition
+                    delay_ms(2000); 
                     LCD_Clear();
                     xSemaphoreGive(lcdMutex);
                 }
@@ -229,7 +245,7 @@ void lcdUpdateTask(void* pvParameters) {
                     LCD_Clear();
                     LCD_SetCursor(0, 0);
                     LCD_Print("Car OFF");
-                    delay_ms(500);  // Shortened delay for faster transition
+                    delay_ms(2000);
                     LCD_Clear();
                     xSemaphoreGive(lcdMutex);
                 }
