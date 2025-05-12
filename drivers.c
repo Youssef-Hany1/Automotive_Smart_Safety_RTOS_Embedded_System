@@ -13,7 +13,11 @@
 #include "Drivers/inc/hw_memmap.h"
 
 
-#define TRIGGER_PIN (1 << 5) // PB5
+#define TRIGGER_PIN GPIO_PIN_5   // Trigger pin (PB5)
+#define ECHO_PIN GPIO_PIN_4      // Echo pin (PB4)
+
+volatile uint32_t startTime, endTime, pulseWidth;
+volatile bool pulseCaptured = false;
 
 // Global volatile flags
 volatile int ignitionState = 0;
@@ -112,120 +116,134 @@ void initSwitches() {
     GPIOIntEnable(GPIO_PORTA_BASE, 0xFC);
 }
 
-// ADC (Speed input from PE3 - channel 0)
+// ADC (Speed input from PE3 - Channel 0)
 void initADC() {
+    // Enable the peripherals for ADC0 and GPIOE
     SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+
+    // Wait for the peripherals to be ready
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_ADC0) || !SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOE));
 
+    // Configure PE3 as ADC input
     GPIOPinTypeADC(GPIO_PORTE_BASE, GPIO_PIN_3);
-    ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
-    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
+
+    // Configure the ADC sequence (Sequence 3 in this case)
+    ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0); // Triggered by processor
+    ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END); // Channel 0, Interrupt enabled, End of sequence
+
+    // Enable the ADC sequence and clear any interrupt flags
     ADCSequenceEnable(ADC0_BASE, 3);
     ADCIntClear(ADC0_BASE, 3);
 }
 
+// Read the speed from the ADC (scaling from 0–4095 to 0–120 km/h)
 int readSpeedADC() {
     uint32_t result;
+    
+    // Trigger the ADC conversion
     ADCProcessorTrigger(ADC0_BASE, 3);
-    while (!ADCIntStatus(ADC0_BASE, 3, false));
-    ADCIntClear(ADC0_BASE, 3);
-    ADCSequenceDataGet(ADC0_BASE, 3, &result);
-    return (result * 120) / 4095; // Scaled to 0–120 km/h
-} 
 
-void initPortA(void)
-{
+    // Wait for the conversion to finish
+    while (!ADCIntStatus(ADC0_BASE, 3, false));
+
+    // Clear the interrupt flag
+    ADCIntClear(ADC0_BASE, 3);
+
+    // Retrieve the result from the ADC
+    ADCSequenceDataGet(ADC0_BASE, 3, &result);
+
+    // Convert the ADC result (0–4095) to speed (0–120 km/h)
+    int speed = (result * 120) / 4095;
+    return speed;
+}
+
+// Initialize the PortB and Timer for the Ultrasonic Sensor
+void initPortB(void) {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
     while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB));
 
-    GPIOB->DIR |= TRIGGER_PIN;    // Set PB5 as output
-    GPIOB->DEN |= TRIGGER_PIN;    // Enable digital on PB5
-    GPIOB->AFSEL &= ~TRIGGER_PIN; // Disable alternate function
-    GPIOB->PCTL &= ~(0x0F << 24); // Clear PCTL for PB5
-    GPIOB->AMSEL &= ~TRIGGER_PIN; // Disable analog on PB5
+    // Configure PB5 (Trigger) as output
+    GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, TRIGGER_PIN);
+    GPIOPinTypeGPIOInput(GPIO_PORTB_BASE, ECHO_PIN);
+    GPIOPinConfigure(0x00000404);  // Configure PB4 as T1CCP0 (Timer1 Capture Pin)
 }
 
-void initTimer1(void)
-{
-    // 1. Enable clock for Timer1 and GPIOB
-    SYSCTL->RCGCTIMER |= (1 << 1); // Enable Timer1 clock
-    SYSCTL->RCGCGPIO |= (1 << 1);  // Enable GPIOB clock
-    while ((SYSCTL->PRTIMER & (1 << 1)) == 0)
-        ; // Wait for Timer1 ready
-    while ((SYSCTL->PRGPIO & (1 << 1)) == 0)
-        ; // Wait for GPIOB ready
+// Initialize Timer1 to capture the pulse width
+void initTimer1(void) {
+    // Enable Timer1 and GPIOB
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER1);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_TIMER1));
+    while (!SysCtlPeripheralReady(SYSCTL_PERIPH_GPIOB));
 
-    // 2. Configure PB4 (T1CCP0) for timer input capture
-    GPIOB->DIR &= ~(1 << 4);    // PB4 as input
-    GPIOB->AFSEL |= (1 << 4);   // Enable alternate function on PB4
-    GPIOB->PCTL &= ~0x000F0000; // Clear PCTL bits for PB4
-    GPIOB->PCTL |= 0x00070000;  // Configure PB4 as T1CCP0
-    GPIOB->DEN |= (1 << 4);     // Enable digital function on PB4
+    // Configure PB4 (T1CCP0) for Timer input capture
+    GPIOPinConfigure(0x00000404);
+    GPIOPinTypeTimer(GPIO_PORTB_BASE, ECHO_PIN);  // Configure as Timer pin
 
-    // 3. Disable Timer1A before configuration
-    TIMER1->CTL &= ~(1 << 0); // Disable Timer1A
+    // Configure Timer1 for capture mode
+    TimerConfigure(TIMER1_BASE, TIMER_CFG_A_CAP_TIME); // Capture mode (edge time)
+    TimerControlEvent(TIMER1_BASE, TIMER_A, TIMER_EVENT_BOTH_EDGES);  // Both rising and falling edges
 
-    // 4. Configure Timer1A for 16-bit, capture mode
-    TIMER1->CFG = 0x00000004; // 16-bit timer configuration
-    TIMER1->TAMR = 0x17;      // Timer A Mode: Capture | Edge-Time | Count-Up
-
-    // 5. Capture on both edges (rising and falling)
-    TIMER1->CTL &= ~(0x3 << 2); // Clear TAEVENT bits
-    TIMER1->CTL |= (0x3 << 2);  // Both edges
-
-    // 6. Set timer interval (not required in edge-time mode, but good practice)
-    TIMER1->TAILR = 0xFFFF; // Max count for 16-bit
-
-    // 7. Clear any pending interrupts and optionally enable capture interrupt
-    TIMER1->ICR = (1 << 2); // Clear capture event interrupt
-
-    // Optional: Enable interrupt (commented out if polling is used)
-    // TIMER1->IMR |= (1 << 2);             // Unmask capture match interrupt
-    // NVIC_EnableIRQ(TIMER1A_IRQn);       // Enable IRQ in NVIC
-
-    // 8. Enable Timer1A
-    TIMER1->CTL |= (1 << 0); // Enable Timer1A
+    // Set the timer to 16-bit and start with the maximum possible value
+    TimerLoadSet(TIMER1_BASE, TIMER_A, 0xFFFF);
+    TimerEnable(TIMER1_BASE, TIMER_A);  // Enable Timer1
 }
 
-void initUltrasonic(void)
-{
-    initPortA();  // Trigger pin (PA6)
-    initTimer1(); // Echo pin (PB4 with edge-time capture)
+// Initialize ultrasonic sensor
+void initUltrasonic(void) {
+    initPortB();
+    initTimer1();
 }
 
-uint32_t ultrasonicReadValue()
-{
-    uint32_t risingEdge, fallingEdge, pulseWidth;
-    float distance;
+// Trigger the Ultrasonic sensor to send a pulse
+void triggerUltrasonicSensor(void) {
+    GPIOPinWrite(GPIO_PORTB_BASE, TRIGGER_PIN, TRIGGER_PIN); // Set trigger high
+    SysCtlDelay(160);  // Delay to keep the trigger high for 10µs
+    GPIOPinWrite(GPIO_PORTB_BASE, TRIGGER_PIN, 0); // Set trigger low
+}
 
-    // Send trigger pulse: 10us HIGH
-    GPIOA->DATA &= ~TRIGGER_PIN; // Clear trigger
-    for (volatile int i = 0; i < 100; i++);                       // Small delay
-    GPIOA->DATA |= TRIGGER_PIN; // Set trigger high
-    for (volatile int i = 0; i < 160; i++);                        // Approx 10us delay
-    GPIOA->DATA &= ~TRIGGER_PIN; // Set trigger low
+// Timer interrupt handler to capture the pulse width
+void TIMER1A_Handler(void) {
+    if (TimerIntStatus(TIMER1_BASE, true) & TIMER_TIMA_TIMEOUT) {
+        // Capture the start and end times for the echo pulse
+        if (GPIOPinRead(GPIO_PORTB_BASE, ECHO_PIN)) {
+            // Rising edge - capture start time
+            startTime = TimerValueGet(TIMER1_BASE, TIMER_A);
+        } else {
+            // Falling edge - capture end time and calculate pulse width
+            endTime = TimerValueGet(TIMER1_BASE, TIMER_A);
+            if (endTime >= startTime) {
+                pulseWidth = endTime - startTime;
+            } else {
+                pulseWidth = (0xFFFF - startTime) + endTime;  // Handle rollover
+            }
+            pulseCaptured = true;  // Set flag to indicate pulse captured
+        }
 
-    // Wait for rising edge
-    while ((TIMER1->RIS & (1 << 2)) == 0);
-    risingEdge = TIMER1->TAR;
-    TIMER1->ICR |= (1 << 2); // Clear capture flag
+        // Clear the interrupt flag
+        TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
+    }
+}
 
-    // Wait for falling edge
-    while ((TIMER1->RIS & (1 << 2)) == 0);
-    fallingEdge = TIMER1->TAR;
-    TIMER1->ICR |= (1 << 2); // Clear capture flag
+// Function to read the ultrasonic sensor distance
+uint32_t ultrasonicReadValue(void) {
+    triggerUltrasonicSensor();  // Trigger ultrasonic sensor pulse
+    pulseCaptured = false;      // Reset flag before capturing pulse
 
-    // Handle overflow
-    if (fallingEdge > risingEdge)
-        pulseWidth = fallingEdge - risingEdge;
-    else
-        pulseWidth = (0xFFFF - risingEdge) + fallingEdge;
+    // Wait for the capture to complete (non-blocking)
+    uint32_t timeout = 1000;  // Timeout after 1000ms
+    while (!pulseCaptured && timeout > 0) {
+        timeout--;
+    }
 
-    // Calculate distance in cm (Time in clock ticks at 16 MHz ? 1 tick = 62.5ns)
-    distance = (pulseWidth * 0.0343) / 2; // Speed of sound is ~343 m/s
-
-    return (uint32_t)distance;
+    if (pulseCaptured) {
+        // Calculate distance in cm using the pulse width
+        float distance = (pulseWidth * 0.0343) / 2.0;  // Speed of sound is ~343 m/s
+        return (uint32_t)distance;
+    } else {
+        return 0;  // Timeout or error
+    }
 }
 
 // RGB LED
@@ -276,7 +294,7 @@ void setBuzzerFrequency(int frequency) {
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, GPIO_PIN_3);
 				delay_ms(frequency);
 			  GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
-				delay_ms(frequency); 
+			delay_ms(frequency);
 		} else
         GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, 0);
 }

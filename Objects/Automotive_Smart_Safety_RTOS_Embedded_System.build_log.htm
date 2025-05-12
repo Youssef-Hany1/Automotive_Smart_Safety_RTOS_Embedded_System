@@ -22,31 +22,30 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 C:\Files\COURSES\Projects\Automotive_Smart_Safety_RTOS_Embedded_System\Automotive_Smart_Safety_RTOS_Embedded_System.uvprojx
-Project File Date:  05/11/2025
+Project File Date:  05/12/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Rebuild target 'Target 1'
+compiling clib_os.c...
+compiling lcd.c...
 compiling freertos_evr.c...
-compiling main.c...
-compiling heap_4.c...
-compiling retarget_io.c...
-compiling drivers.c...
-compiling port.c...
-compiling event_groups.c...
+compiling safety_tasks.c...
 compiling system_TM4C123.c...
 assembling startup_TM4C123.s...
-compiling lcd.c...
+compiling drivers.c...
 compiling list.c...
+compiling port.c...
+compiling main.c...
 compiling os_systick.c...
+compiling event_groups.c...
+compiling heap_4.c...
 compiling timers.c...
-compiling clib_os.c...
-compiling safety_tasks.c...
 compiling queue.c...
 compiling cmsis_os2.c...
 compiling tasks.c...
 linking...
-Program Size: Code=28336 RO-data=2776 RW-data=1644 ZI-data=12000  
+Program Size: Code=18460 RO-data=2104 RW-data=1644 ZI-data=12016  
 ".\Objects\Automotive_Smart_Safety_RTOS_Embedded_System.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -70,13 +69,6 @@ Package Vendor: ARM
    * Component: Heap Variant: Heap_4 Version: 11.2.0
    * Component: Timers Version: 11.2.0
    * Component: FreeRTOS Variant: Cortex-M Version: 11.2.0
-
-Package Vendor: Keil
-                https://www.keil.com/pack/Keil.ARM_Compiler.1.7.2.pack
-                Keil.ARM_Compiler.1.7.2
-                Keil ARM Compiler extensions for ARM Compiler 5 and ARM Compiler 6
-   * Component: STDIN Variant: ITM Version: 1.2.0
-   * Component: STDOUT Variant: ITM Version: 1.2.0
 
 Package Vendor: Keil
                 http://www.keil.com/pack/Keil.TM4C_DFP.1.1.0.pack
@@ -106,19 +98,19 @@ Package Vendor: Keil
       Include file:  CMSIS/RTOS2/FreeRTOS/Config/FreeRTOSConfig.h
 
    * Component: ARM.FreeRTOS::RTOS:Core:Cortex-M:11.2.0
-      Include file:  Source/include/FreeRTOS.h
-      Source file:   Source/list.c
       Include file:  Source/include/task.h
+      Include file:  Source/include/FreeRTOS.h
       Include file:  Source/include/queue.h
+      Source file:   Source/tasks.c
       Include file:  Source/include/semphr.h
       Source file:   Source/queue.c
-      Source file:   Source/tasks.c
       Source file:   Source/portable/GCC/ARM_CM4F/port.c
+      Source file:   Source/list.c
       Source file:   CMSIS/RTOS2/FreeRTOS/Source/freertos_evr.c
 
    * Component: ARM.FreeRTOS::RTOS:Event Groups:11.2.0
-      Include file:  Source/include/event_groups.h
       Source file:   Source/event_groups.c
+      Include file:  Source/include/event_groups.h
 
    * Component: ARM.FreeRTOS::RTOS:Heap:Heap_4:11.2.0
       Source file:   Source/portable/MemMang/heap_4.c
@@ -133,21 +125,15 @@ Package Vendor: Keil
       Source file:   CMSIS/RTOS2/Source/os_systick.c
 
    * Component: ARM::CMSIS:RTOS2:FreeRTOS:Cortex-M:11.2.0
-      Source file:   CMSIS/RTOS2/FreeRTOS/Source/clib_os.c
-      Source file:   CMSIS/RTOS2/FreeRTOS/Source/cmsis_os2.c
       Include file:  CMSIS/RTOS2/FreeRTOS/Include/freertos_mpool.h
-
-   * Component: Keil.ARM Compiler::Compiler:I/O:STDIN:ITM:1.2.0
-      Source file:   Source/retarget_io.c
-
-   * Component: Keil.ARM Compiler::Compiler:I/O:STDOUT:ITM:1.2.0
-      Source file:   Source/retarget_io.c
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/cmsis_os2.c
+      Source file:   CMSIS/RTOS2/FreeRTOS/Source/clib_os.c
 
    * Component: Keil::Device:Startup:1.0.1
       Include file:  Device/Include/TM4C123/TM4C123.h
       Source file:   Device/Source/ARM/startup_TM4C123.s
       Source file:   Device/Source/system_TM4C123.c
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

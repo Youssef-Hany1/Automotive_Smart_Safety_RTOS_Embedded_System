@@ -7,7 +7,6 @@
 ".\objects\clib_os.o"
 ".\objects\cmsis_os2.o"
 ".\objects\os_systick.o"
-".\objects\retarget_io.o"
 ".\objects\startup_tm4c123.o"
 ".\objects\system_tm4c123.o"
 ".\objects\freertos_evr.o"
