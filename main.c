@@ -25,7 +25,7 @@ void setupHardware() {
     initSwitches();
 		initDoorLockLed();
     initADC();
-    ultrasonic_init();
+    initUltrasonic();
     initLCD();
     initBuzzer();
     initRGB();
