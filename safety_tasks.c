@@ -9,7 +9,7 @@
 #include "task.h"       // FreeRTOS task management
 #include "queue.h"      // FreeRTOS queue management
 #include "semphr.h"     // FreeRTOS semaphore management
-#include "lcd.h"        // LCD driver (assumed to be custom or library)
+#include "lcd.h"        // LCD driver
 #include "drivers.h"    // Custom peripheral drivers (from previous context)
 
 // TivaWare DriverLib Includes
@@ -399,32 +399,30 @@ void lcdUpdateTask(void* pvParameters) {
                 // If door is open and unlocked, doorTask handles the "Door Opened" message on line 0.
                 // So, we don't print gear/lock status to avoid conflict.
 
-                // Update Speed and Distance on the second line if not showing "Door Opened".
+                // Update Speed and Distance on the second line.
                 bool needUpdateLine2 = false;
-                if (! (doorOpen && !doorLocked) ) { // Only update line 2 if "Door Opened" is not active
-                    if (gear == 'R') { // In Reverse: display Speed and Distance.
-                        if (speed != lastSpeed || dist != lastDist || gear != lastGear) { // Update if speed, dist or gear changed (gear change implies context switch for line 2)
-                            sprintf(buffer, "S:%3dkm D:%3dcm ", speed, dist);
-                            lastSpeed = speed;
-                            lastDist = dist;
-                            needUpdateLine2 = true;
-                        }
-                    } else if (gear == 'D') { // In Drive: display Speed only.
-                        if (speed != lastSpeed || gear != lastGear) {
-                            sprintf(buffer, "S:%3dkm        ", speed); // Padded to clear distance.
-                            lastSpeed = speed;
-                            lastDist = 0; // Reset lastDist as it's not displayed.
-                            needUpdateLine2 = true;
-                        }
-                    } else if (gear == 'N') { // In Neutral: clear Speed and Distance.
-                        if (lastSpeed != -999 || lastDist != -999 || gear != lastGear) { // Use specific values to ensure clearing only once.
-                            sprintf(buffer, "                "); // Clear line.
-                            lastSpeed = -999; // Sentinel for "cleared".
-                            lastDist = -999;  // Sentinel for "cleared".
-                            needUpdateLine2 = true;
-                        }
-                    }
-                }
+								if (gear == 'R') { // In Reverse: display Speed and Distance.
+										if (speed != lastSpeed || dist != lastDist || gear != lastGear) { // Update if speed, dist or gear changed (gear change implies context switch for line 2)
+												sprintf(buffer, "S:%3dkm D:%3dcm ", speed, dist);
+												lastSpeed = speed;
+												lastDist = dist;
+												needUpdateLine2 = true;
+										}
+								} else if (gear == 'D') { // In Drive: display Speed only.
+										if (speed != lastSpeed || gear != lastGear) {
+												sprintf(buffer, "S:%3dkm        ", speed); // Padded to clear distance.
+												lastSpeed = speed;
+												lastDist = 0; // Reset lastDist as it's not displayed.
+												needUpdateLine2 = true;
+										}
+								} else if (gear == 'N') { // In Neutral: clear Speed and Distance.
+										if (lastSpeed != -999 || lastDist != -999 || gear != lastGear) { // Use specific values to ensure clearing only once.
+												sprintf(buffer, "                "); // Clear line.
+												lastSpeed = -999; // Sentinel for "cleared".
+												lastDist = -999;  // Sentinel for "cleared".
+												needUpdateLine2 = true;
+										}
+								}
 
 
                 if (needUpdateLine2) {

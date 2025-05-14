@@ -1,6 +1,6 @@
 Dependencies for Project 'Automotive_Smart_Safety_RTOS_Embedded_System', Target 'Target 1': (DO NOT MODIFY !)
 CompilerVersion: 6190000::V6.19::ARMCLANG
-F (.\main.c)(0x682288A4)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O2 -ffunction-sections -w -I ../Automotive_Smart_Safety_RTOS_Embedded_System -I ./Drivers/driverlib -I ./Drivers/inc -I C:/TivaWare_C_Series-2.2.0.295-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/portable/GCC/ARM_CM4F-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/RTOS2/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="538" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -DPART_TM4C123GH6PM-o ./objects/main.o -MD)
+F (.\main.c)(0x6824C806)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O2 -ffunction-sections -w -I ../Automotive_Smart_Safety_RTOS_Embedded_System -I ./Drivers/driverlib -I ./Drivers/inc -I C:/TivaWare_C_Series-2.2.0.295-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/portable/GCC/ARM_CM4F-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/RTOS2/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="538" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -DPART_TM4C123GH6PM-o ./objects/main.o -MD)
 I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\FreeRTOS.h)(0x67E518F8)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x63889D68)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63889D68)
@@ -26,14 +26,12 @@ I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\inc
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x63889D68)
 I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\task.h)(0x67E518FA)
 I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\list.h)(0x67E518F8)
-I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\queue.h)(0x67E518FA)
-I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\semphr.h)(0x67E518FA)
 I (Drivers\inc\tm4c123gh6pm.h)(0x68178F3B)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\drivers.h)(0x682289A6)
-I (..\Automotive_Smart_Safety_RTOS_Embedded_System\lcd.h)(0x681B40F2)
-I (..\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.h)(0x68178F3B)
+I (..\Automotive_Smart_Safety_RTOS_Embedded_System\lcd.h)(0x6823CD5B)
+I (..\Automotive_Smart_Safety_RTOS_Embedded_System\safety_tasks.h)(0x6823CD9F)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\interrupt.h)(0x68178F3B)
-F (.\safety_tasks.c)(0x68228A2F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O2 -ffunction-sections -w -I ../Automotive_Smart_Safety_RTOS_Embedded_System -I ./Drivers/driverlib -I ./Drivers/inc -I C:/TivaWare_C_Series-2.2.0.295-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/portable/GCC/ARM_CM4F-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/RTOS2/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="538" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -DPART_TM4C123GH6PM-o ./objects/safety_tasks.o -MD)
+F (.\safety_tasks.c)(0x6824C226)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O2 -ffunction-sections -w -I ../Automotive_Smart_Safety_RTOS_Embedded_System -I ./Drivers/driverlib -I ./Drivers/inc -I C:/TivaWare_C_Series-2.2.0.295-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/portable/GCC/ARM_CM4F-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/RTOS2/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="538" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -DPART_TM4C123GH6PM-o ./objects/safety_tasks.o -MD)
 I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\FreeRTOS.h)(0x67E518F8)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x63889D68)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63889D68)
@@ -62,7 +60,7 @@ I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\inc
 I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\list.h)(0x67E518F8)
 I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\queue.h)(0x67E518FA)
 I (C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\semphr.h)(0x67E518FA)
-I (..\Automotive_Smart_Safety_RTOS_Embedded_System\lcd.h)(0x681B40F2)
+I (..\Automotive_Smart_Safety_RTOS_Embedded_System\lcd.h)(0x6823CD5B)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\drivers.h)(0x682289A6)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\sysctl.h)(0x68178F3B)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\gpio.h)(0x68178F3B)
@@ -72,7 +70,7 @@ I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\timer.h)(0x
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\interrupt.h)(0x68178F3B)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_ints.h)(0x68178F3B)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_memmap.h)(0x68178F3B)
-F (.\lcd.c)(0x68220D23)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O2 -ffunction-sections -w -I ../Automotive_Smart_Safety_RTOS_Embedded_System -I ./Drivers/driverlib -I ./Drivers/inc -I C:/TivaWare_C_Series-2.2.0.295-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/portable/GCC/ARM_CM4F-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/RTOS2/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="538" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -DPART_TM4C123GH6PM-o ./objects/lcd.o -MD)
+F (.\lcd.c)(0x6823CD39)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O2 -ffunction-sections -w -I ../Automotive_Smart_Safety_RTOS_Embedded_System -I ./Drivers/driverlib -I ./Drivers/inc -I C:/TivaWare_C_Series-2.2.0.295-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/portable/GCC/ARM_CM4F-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/RTOS2/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="538" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -DPART_TM4C123GH6PM-o ./objects/lcd.o -MD)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x63889D68)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdbool.h)(0x63889D68)
 I (C:\Keil_v5\ARM\ARMCLANG\include\string.h)(0x63889D68)
@@ -103,8 +101,8 @@ I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\driverlib\interrupt.h
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_gpio.h)(0x68178F3B)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_ints.h)(0x68178F3B)
 I (..\Automotive_Smart_Safety_RTOS_Embedded_System\Drivers\inc\hw_memmap.h)(0x68178F3B)
-F (.\safety_tasks.h)(0x68178F3B)()
-F (.\lcd.h)(0x681B40F2)()
+F (.\safety_tasks.h)(0x6823CD9F)()
+F (.\lcd.h)(0x6823CD5B)()
 F (.\drivers.h)(0x682289A6)()
 F (.\Drivers\driverlib\rvmdk\driverlib.lib)(0x68178F3B)()
 F (C:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/CMSIS/RTOS2/FreeRTOS/Source/clib_os.c)(0x67C84064)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O2 -ffunction-sections -w -I ../Automotive_Smart_Safety_RTOS_Embedded_System -I ./Drivers/driverlib -I ./Drivers/inc -I C:/TivaWare_C_Series-2.2.0.295-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/11.2.0/Source/portable/GCC/ARM_CM4F-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/Core/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/ARM/CMSIS/6.1.0/CMSIS/RTOS2/Include-IC:/Users/Youssef/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="538" -D_RTE_ -DTM4C123GH6PM -D_RTE_ -DPART_TM4C123GH6PM-o ./objects/clib_os.o -MD)
