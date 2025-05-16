@@ -225,24 +225,6 @@ bool isDriverDoorOpen(void);
 
 //*****************************************************************************
 //
-// Door Locking Control Functions
-//
-//*****************************************************************************
-
-/**
- * @brief Engages the door locking mechanism (or indicates locked state).
- * Currently implemented as turning the Red LED (PF1) ON.
- */
-void lockDoors(void);
-
-/**
- * @brief Disengages the door locking mechanism (or indicates unlocked state).
- * Currently implemented as turning the Red LED (PF1) OFF.
- */
-void unlockDoors(void);
-
-//*****************************************************************************
-//
 // Manual Input State Functions
 //
 //*****************************************************************************

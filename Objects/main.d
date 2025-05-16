@@ -23,6 +23,8 @@
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdbool.h \
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\task.h \
   C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\list.h \
+  C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\queue.h \
+  C:\Users\Youssef\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\11.2.0\Source\include\semphr.h \
   Drivers\inc\tm4c123gh6pm.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\drivers.h \
   ..\Automotive_Smart_Safety_RTOS_Embedded_System\lcd.h \

@@ -721,32 +721,6 @@ bool isIgnitionOn()  { return ignitionState != 0; } // Or `return ignitionState;
  */
 bool isDriverDoorOpen() { return driverDoorState != 0; } // Or `return driverDoorState;` if 1 means OPEN
 
-//*****************************************************************************
-//
-// Door Locking Control Logic
-//
-//*****************************************************************************
-
-/**
- * @brief Activates the door locking mechanism.
- *
- * Currently, this function only turns ON the Red LED (PF1) as an indicator.
- * Actual door locking hardware control would be implemented here.
- */
-void lockDoors() {
-    // Placeholder: Turn Red LED on (PF1) to indicate "locked"
-    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
-}
-
-/**
- * @brief Activates the door unlocking mechanism.
- *
- * Currently, this function only turns OFF the Red LED (PF1) as an indicator.
- */
-void unlockDoors() {
-    // Placeholder: Turn Red LED off (PF1) to indicate "unlocked"
-    GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0);
-}
 
 //*****************************************************************************
 //

@@ -146,7 +146,6 @@ void doorTask(void* pvParameters) {
             // - Driver's door is closed.
             // - `wasHigh` is false (to prevent re-locking immediately after speed drops and rises again).
             if ((isGearDrive() || isGearReverse()) && speed > 10 && !doorLocked && !isDriverDoorOpen() && !wasHigh) {
-                lockDoors();         // Call driver function to lock doors (e.g., activate actuator, turn on LED).
                 setDoorLockLed(1);   // Turn on the door lock indicator LED.
                 doorLocked = true;   // Update global door lock state.
                 wasHigh = true;      // Set flag indicating speed has exceeded the threshold.
@@ -164,7 +163,6 @@ void doorTask(void* pvParameters) {
             // - Doors are not already locked.
             // - Driver's door is closed (safety: don't lock if door is open).
             if (isManualLockOn() && !doorLocked && !isDriverDoorOpen()) {
-                lockDoors();
                 setDoorLockLed(1);
                 doorLocked = true;
             }
@@ -174,7 +172,6 @@ void doorTask(void* pvParameters) {
             // - Manual unlock lever is activated.
             // - Doors are currently locked.
             if (isManualUnlockOn() && doorLocked) {
-                unlockDoors();       // Call driver function to unlock doors.
                 setDoorLockLed(0);   // Turn off door lock indicator LED.
                 doorLocked = false;  // Update global door lock state.
             }
@@ -207,7 +204,6 @@ void doorTask(void* pvParameters) {
             setOffBuzzer();      // Turn off buzzer.
             doorOpenedBuzzer = false;
             distanceBuzzer = false; // Also ensure distance buzzer flag is reset.
-            unlockDoors();
             setDoorLockLed(0);
             doorLocked = false;
             wasHigh = false; // Reset speed threshold flag.
